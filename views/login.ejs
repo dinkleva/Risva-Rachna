@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Form</title>
+</head>
+<body>
+  <h2>Login</h2>
+  <form id="loginForm" action="http://localhost:3000/login" method="POST">
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+      <input type="submit" value="Login">
+    </div>
+  </form>
+
+  <div id="responseContainer" style="display: none;">
+    <h3>Login Response</h3>
+    <p id="responseMessage"></p>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Get the form data
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Create the request body
+      const data = {
+        username: username,
+        password: password
+      };
+
+      // Send the POST request to the login endpoint
+      fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => {
+        //   if (!response.ok) {
+        //     throw response
+        //   }
+          return response.json()
+        })
+        .then(data => {
+          // Display the login response
+          const responseMessage = document.getElementById('responseMessage');
+          if(data.error){
+            if(data.error.username){
+
+                responseMessage.textContent = JSON.stringify(data.error.username)
+            }
+            if(data.error.password){
+                responseMessage.textContent = JSON.stringify(data.error.password)
+            }
+          }
+          if(data.message){
+            responseMessage.textContent = JSON.stringify(data.message);
+          }
+
+          // Show the response container
+          const responseContainer = document.getElementById('responseContainer');
+          responseContainer.style.display = 'block';
+        })
+        .catch(error => {
+          // Display the error message
+          const responseMessage = document.getElementById('responseMessage');
+          responseMessage.textContent = 'Error: ' + error.message;
+
+          // Show the response container
+          const responseContainer = document.getElementById('responseContainer');
+          responseContainer.style.display = 'block';
+        });
+    });
+  </script>
+</body>
+</html>
