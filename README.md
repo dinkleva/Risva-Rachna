@@ -18,3 +18,13 @@ I created a function getOrdersPast7Days in Node.js that retrieves all orders cre
 
 D. API in NodeJs/Python
 I created a class Fruit with the following fields: id, name, and color. Implemented an API app.get('/fruits', (req,res) =>{}) that returns a sorted list of Fruit objects based on their color.
+
+
+
+
+NOTE:
+To run the app navigate to the base directory and open in terminal and type
+
+1.nodemon server.js
+2.Open a browser and type the url: "localhost:3000" this will be the home page
+3.For api type in url "localhost:3000/login" or "localhost:3000/fruits" etc to use all related api
